@@ -190,7 +190,7 @@ int main()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);//turn off  VBOs
 
 	bool VBO=true;
-	//VBO=false;
+	VBO=false;
 			
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
@@ -221,14 +221,15 @@ int main()
 		glGenBuffers(1, &vboIdIndex);
 
 		
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboIdIndex); // for indices
-		glErrorMsg("bind index array1");
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexArraySize, indexArray, GL_STATIC_DRAW);
-		glErrorMsg("bind index array2");
-		
-		glErrorMsg("idx pointer");
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboIdIndex); // for indices
+		//glErrorMsg("bind index array1");
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexArraySize, indexArray, GL_STATIC_DRAW);
+		//glErrorMsg("bind index array2");
+		//
+		//glErrorMsg("idx pointer");
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // for indices
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // for indices
+
 		/*glBindBuffer(GL_ARRAY_BUFFER,0);
 		glEnableClientState(GL_VERTEX_ARRAY);
 	    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
@@ -240,7 +241,7 @@ int main()
 	if(!VBO){
 
 		
-		glEnableClientState(GL_VERTEX_ARRAY);
+		//glEnableClientState(GL_VERTEX_ARRAY);
 	    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
 		
 	    glErrorMsg("vtxPointer1");
@@ -337,10 +338,10 @@ int main()
 
 		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
-       glBegin(GL_TRIANGLES);
-			glVertex3d(0,0,0);
-			glVertex3d(0,0.5,0);
-			glVertex3d(0,0,0.5);
+       //glBegin(GL_TRIANGLES);
+			//glVertex3d(0,0,0);
+			//glVertex3d(0,0.5,0);
+			//glVertex3d(0,0,0.5);
 
    //         for(int i=0;i<icosTrianglesSize;i++){
 			//	
@@ -352,20 +353,22 @@ int main()
 			//	glArrayElement(icosTriangles[i][1]);
 			//	glArrayElement(icosTriangles[i][2]);
 			//}
-        glEnd();
+        //glEnd();
 		
 
 
 		 //draw using vbo
 		 if(VBO)
 			glDrawElements(GL_TRIANGLES, 
-			indexArraySize, GL_UNSIGNED_INT,indexArray);
+			indexArraySize*3, GL_UNSIGNED_INT,indexArray);
 	
-		 else
-			glDrawElements(GL_TRIANGLES, 
+		 else{
+			 //glEnableVertexAttribArray(0);                                               //ENABLE VERTEX POSITION
+			 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);      // VERTEX POSITION POINTER
+			 glDrawElements(GL_TRIANGLES, 
 			indexArraySize*3, GL_UNSIGNED_INT, indexArray);
          //Finally, display rendered frame on screen
-		
+		 }
 		glErrorMsg("Draw");
 
 
